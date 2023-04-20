@@ -22,7 +22,7 @@ CompilarGramatica.bat: Archivo que al ejecutarse, ejecuta un comando por consola
 
 grammar.txt: Archivo con la gramática que analiza dicho parser.
 
-test.txt: Archivo con series de string para evaluar si son aceptados por el parser.
+test.txt: Archivo con múltiples string para evaluar si son aceptados por el parser.
 
 ¿Cómo Usar el Proyecto?
 
