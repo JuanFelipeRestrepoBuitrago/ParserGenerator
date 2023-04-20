@@ -19,7 +19,7 @@ SKIP : {
 	| "\n"
 }
 
-// This is the list of tokens that the lexer will recognize, can be seen as the "alphabet" of the language
+// This is the list of tokens that the lexer will recognize, can be seen as the "alphabet" of the grammar
 // or the list of terminal symbols of the grammar
 TOKEN: {
         <PARENI: "(">

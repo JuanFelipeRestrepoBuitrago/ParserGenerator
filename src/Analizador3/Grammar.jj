@@ -21,11 +21,13 @@ SKIP : {
 
 // This is the list of tokens that the lexer will recognize, can be seen as the "alphabet" of the grammar
 // or the list of terminal symbols of the grammar
-TOKEN: {
-        <PARENI: "(">
-    |   <PARENF: ")">
-    |   <SEMICOLON: ";" >
-    |   <X: "x" >
+TOKEN : {
+      <PARENI: "(">
+    | <PARENF: ")">
+    | <CBRACKETI: "{" >
+    | <CBRACKETF: "}" >
+    | <BRACKETI: "[" >
+    | <BRACKETF: "]" >
 }
 
 // The below methods are the grammar rules of the grammar, also called as productions,
@@ -39,25 +41,14 @@ void Verify():
     (Expresion())+ <EOF>
 }
 
-// This method is the first production of the grammar, it is the start symbol of the grammar
-// S -> (A)
+// The first big parenthesis is the first production of the grammar,
+// the second one is the second production
+//
 void Expresion():
 {}
 {
-    <PARENI> Content() <PARENF>
-}
-
-// This is the next production of the grammar, it is the second symbol of the grammar
-// A -> CB and it is joined with the next production B -> ;A|ε
-void Content():
-{}
-{
-    Final() (<SEMICOLON> Content())*
-}
-
-// This is the last production of the grammar, C -> x|S
-void Final():
-{}
-{
-    <X> | Expresion()
+      (<PARENI> (Expresion())* <PARENF> // The first production
+    | <CBRACKETI> (Expresion())* <CBRACKETF> // The first production
+    | <BRACKETI> (Expresion())* <BRACKETF>) // The first production
+    (Expresion())* // The second production
 }
