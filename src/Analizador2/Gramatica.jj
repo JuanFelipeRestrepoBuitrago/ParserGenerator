@@ -1,0 +1,48 @@
+options {
+IGNORE_CASE = true;
+STATIC = false;
+}
+
+PARSER_BEGIN(Gramatica)
+package Analizador2;
+
+public class Gramatica {}
+PARSER_END(Gramatica)
+
+SKIP : {
+	" "
+	| "\t"
+	| "\r"
+	| "\n"
+}
+
+TOKEN: {
+        <PARENI: "(">
+    |   <PAREND: ")">
+    |   <PUNTCOM: ";" >
+    |   <X: "x" >
+}
+
+void Analizar():
+{}
+{
+    (Expresion())+ <EOF>
+}
+
+void Expresion():
+{}
+{
+    <PARENI> Contenido() <PAREND>
+}
+
+void Contenido():
+{}
+{
+    Final() (<PUNTCOM> Contenido())*
+}
+
+void Final():
+{}
+{
+    <X> | Expresion()
+}
