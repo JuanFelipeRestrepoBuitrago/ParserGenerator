@@ -1,0 +1,49 @@
+//
+options {
+IGNORE_CASE = true;
+STATIC = false;
+}
+
+PARSER_BEGIN(Parser)
+package Analizador2.Generado;
+
+public class Parser {}
+PARSER_END(Parser)
+
+SKIP : {
+	" "
+	| "\t"
+	| "\r"
+	| "\n"
+}
+
+TOKEN: {
+        <PARENI: "(">
+    |   <PARENF: ")">
+    |   <SEMICOLON: ";" >
+    |   <X: "x" >
+}
+
+void Verify():
+{}
+{
+    (Expresion())+ <EOF>
+}
+
+void Expresion():
+{}
+{
+    <PARENI> Content() <PARENF>
+}
+
+void Content():
+{}
+{
+    Final() (<SEMICOLON> Content())*
+}
+
+void Final():
+{}
+{
+    <X> | Expresion()
+}

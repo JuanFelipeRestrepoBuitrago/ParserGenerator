@@ -1,0 +1,58 @@
+options {
+IGNORE_CASE = true;
+STATIC = false;
+}
+
+PARSER_BEGIN(Parser)
+package Analizador1;
+
+public class Parser {}
+PARSER_END(Parser)
+
+SKIP : {
+	" "
+	| "\t"
+	| "\r"
+	| "\n"
+}
+
+TOKEN : {
+	  <NUMBER: (["0"-"9"])+>
+    | <DECIMAL: (["0"-"9"])+"."(["0"-"9"])+>
+    | <PARENI: "(">
+    | <PARENF: ")">
+    | <ADDITION: "+">
+    | <SUBSTRACTION: "-">
+    | <PRODUCT: "*">
+    | <DIVISION: "/">
+}
+
+void Verify():
+{}
+{
+    (Expresion())+ <EOF>
+}
+
+void Expresion():
+{}
+{
+    ProductDivision()((<ADDITION> | <SUBSTRACTION>) ProductDivision())*
+}
+
+void ProductDivision():
+{}
+{
+    Parentheses()((<PRODUCT> | <DIVISION>) Parentheses())*
+}
+
+void Parentheses():
+{}
+{
+    <PARENI> Expresion() <PARENF> | Number()
+}
+
+void Number():
+{}
+{
+    <NUMBER> | <DECIMAL>
+}
