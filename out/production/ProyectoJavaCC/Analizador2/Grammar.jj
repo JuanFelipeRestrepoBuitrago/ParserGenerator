@@ -1,15 +1,17 @@
-//
+// This section is optional, these are some configuration options
 options {
-IGNORE_CASE = true;
-STATIC = false;
+IGNORE_CASE = true; // Specifies whether the lexer should ignore case when matching tokens.
+STATIC = false; // Specifies whether the generated parser methods should be static.
 }
 
+// Class name of the generated parser
 PARSER_BEGIN(Parser)
-package Analizador2.Generado;
+package Analizador2;
 
 public class Parser {}
 PARSER_END(Parser)
 
+// These are the tokens that the lexer will skip when parsing the input
 SKIP : {
 	" "
 	| "\t"
@@ -17,6 +19,8 @@ SKIP : {
 	| "\n"
 }
 
+// This is the list of tokens that the lexer will recognize, can be seen as the "alphabet" of the language
+// or the list of terminal symbols of the grammar
 TOKEN: {
         <PARENI: "(">
     |   <PARENF: ")">
@@ -24,24 +28,34 @@ TOKEN: {
     |   <X: "x" >
 }
 
+// The below methods are the grammar rules of the grammar, also called as productions,
+// they are the non-terminal symbols of the grammar
+
+// The first method is the way the parser parses a whole input file,
+// which contains a list of expressions
 void Verify():
 {}
 {
     (Expresion())+ <EOF>
 }
 
+// This method is the first production of the grammar, it is the start symbol of the grammar
+// S -> (A)
 void Expresion():
 {}
 {
     <PARENI> Content() <PARENF>
 }
 
+// This is the next production of the grammar, it is the second symbol of the grammar
+// A -> CB and it is joined with the next production B -> ;A|ε
 void Content():
 {}
 {
     Final() (<SEMICOLON> Content())*
 }
 
+// This is the last production of the grammar, C -> x|S
 void Final():
 {}
 {
